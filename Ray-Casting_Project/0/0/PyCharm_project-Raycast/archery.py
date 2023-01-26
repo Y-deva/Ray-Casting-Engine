@@ -23,10 +23,11 @@ class ART:
     def go(self):
         try:
             for i in range(0, int(SETTINGS.tile_size * 25 // SETTINGS.FPS), int(SETTINGS.tile_size * 25 // SETTINGS.FPS // 7)):
-                self.x += cos(self.anchor) * 1 * int(SETTINGS.tile_size * 25 // SETTINGS.FPS // 7)
-                self.y += sin(self.anchor) * 1 * int(SETTINGS.tile_size * 25 // SETTINGS.FPS // 7)
+                self.x += cos(self.anchor) * 1 * int(SETTINGS.tile_size * 100 // SETTINGS.FPS // 7)
+                self.y += sin(self.anchor) * 1 * int(SETTINGS.tile_size * 100 // SETTINGS.FPS // 7)
 
-                if text_map.text_map[round(self.y / SETTINGS.tile_size)][round(self.x / SETTINGS.tile_size)] != ' ':
+                if text_map.text_map[round(self.y / SETTINGS.tile_size)][round(self.x / SETTINGS.tile_size)] \
+                        not in [' ', 'N']:
                     # print(0, text_map.text_map[round(self.y / SETTINGS.tile_size)][round(self.x / SETTINGS.tile_size)],
                     #       self.x // SETTINGS.tile_size, self.y // SETTINGS.tile_size, i)
                     art_list.pop(self)
@@ -38,14 +39,21 @@ class ART:
                     break
                 else:
                     n = False
-                    for j in range(0, SETTINGS.tile_size // 16):
+                    for j in (0, (SETTINGS.tile_size // int(16 ** 0.25))):
                         if n:
                             break
-                        for k in range(0, SETTINGS.tile_size // 16):
+                        for k in (0, (SETTINGS.tile_size // int(16 ** 0.25))):
                             if (round(self.x + j) // SETTINGS.tile_size,
                                 round(self.y + k) // SETTINGS.tile_size) in npc_list.keys():
                                 del npc_list[(round(self.x + j) // SETTINGS.tile_size,
                                               round(self.y + k) // SETTINGS.tile_size)]
+                                # npc_list.pop((round(self.x + j), round(self.y + k)))
+                                n = True
+                                break
+                            elif (round(self.x - j) // SETTINGS.tile_size,
+                                round(self.y - k) // SETTINGS.tile_size) in npc_list.keys():
+                                del npc_list[(round(self.x - j) // SETTINGS.tile_size,
+                                              round(self.y - k) // SETTINGS.tile_size)]
                                 # npc_list.pop((round(self.x + j), round(self.y + k)))
                                 n = True
                                 break
@@ -67,6 +75,7 @@ def npc_take(screen, txt_map, n_to_width):
     for i in range(1, n_to_width + 1):
         for j in range(1, n_to_width + 1):
             x, y = None, 0
+
             while x is None or txt_map[y][x] != ' ':
                 x, y = random.randrange(i * (len(txt_map[0]) - 1) // n_to_width,
                                         (i - 1) * (len(txt_map[0]) - 1) // n_to_width, -1), \

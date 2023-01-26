@@ -39,7 +39,7 @@ class Render:
             'N': [pygame.image.load(
                 f'img/textures/128px/var_n/{i}.png').convert() for i in range(1, SETTINGS.tile_size + 1)],
             'A': [pygame.image.load(
-                f'img/textures/128px/var_5/{i}.png').convert() for i in range(1, SETTINGS.tile_size + 1)],
+                f'img/textures/128px/art/{i}.png').convert() for i in range(1, SETTINGS.tile_size + 1)],
         }
 
     def draw_world(self, walls, floor):
@@ -67,25 +67,26 @@ class Render:
         [pygame.draw.rect(self.sc_map, SETTINGS.DARKGRAY, obj, 1) for obj in map]
 
         '''Draw minimap player'''
-        scale_player_x = self.scaling_to_map(player_x)
-        scale_player_y = self.scaling_to_map(player_y)
+        if map_hide == 0:
+            scale_player_x = self.scaling_to_map(player_x)
+            scale_player_y = self.scaling_to_map(player_y)
 
-        pygame.draw.line(self.sc_map, SETTINGS.DARKYELLOW, (scale_player_x, scale_player_y),
-                        (scale_player_x + 14 * cos_a, scale_player_y + 14 * sin_a), 1)
-        pygame.draw.circle(self.sc_map, SETTINGS.DARKRED,
-                          (scale_player_x, scale_player_y), 4)
-        for i in archery.npc_list.keys():
-            x, y = self.scaling_to_map(i[0] * SETTINGS.tile_size), self.scaling_to_map(i[1] * SETTINGS.tile_size)
-            pygame.draw.circle(self.sc_map, SETTINGS.DARKBLUE,
-                               (x, y), 4)
+            pygame.draw.line(self.sc_map, SETTINGS.DARKYELLOW, (scale_player_x, scale_player_y),
+                            (scale_player_x + 14 * cos_a, scale_player_y + 14 * sin_a), 1)
+            pygame.draw.circle(self.sc_map, SETTINGS.DARKRED,
+                              (scale_player_x, scale_player_y), 4)
+            for i in archery.npc_list.keys():
+                x, y = self.scaling_to_map(i[0] * SETTINGS.tile_size), self.scaling_to_map(i[1] * SETTINGS.tile_size)
+                pygame.draw.circle(self.sc_map, SETTINGS.DARKBLUE,
+                                   (x, y), 4)
 
-        for i in archery.art_list.keys():
-            x, y = self.scaling_to_map(i.x), self.scaling_to_map(i.y)
-            pygame.draw.circle(self.sc_map, SETTINGS.YELLOW,
-                               (x, y), 1)
+            for i in archery.art_list.keys():
+                x, y = self.scaling_to_map(i.x), self.scaling_to_map(i.y)
+                pygame.draw.circle(self.sc_map, SETTINGS.YELLOW,
+                                   (x, y), 1)
         # self.sc_map.fill(pygame.color.Color(0, 0, 0, 0))
         x, y = SETTINGS.map_position
-        x, y = x - SETTINGS.map_size[0] * map_hide, y - SETTINGS.map_size[1] * map_hide
+        x, y = x - SETTINGS.map_size[0] * max(map_hide - 1, 0), y - SETTINGS.map_size[1] * max(map_hide - 1, 0)
         self.sc.blit(self.sc_map, (x, y))
         # pygame.draw.line(self.sc, SETTINGS.WHITE, (0, SETTINGS.h_HEIGHT), (SETTINGS.WIDTH, SETTINGS.h_HEIGHT))
         # pygame.draw.line(self.sc, SETTINGS.WHITE, (0, SETTINGS.h_HEIGHT + 30),

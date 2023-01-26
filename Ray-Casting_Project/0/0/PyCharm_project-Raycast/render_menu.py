@@ -10,7 +10,7 @@ class Menu:
         self.screen = screen
         self.sc = true_screen
 
-    def draw_menu(self, is_open=False, mus=True, map_hide=False):
+    def draw_menu(self, is_open=False, mus=True, map_hide=0):
         if is_open:
             self.sc.fill(SETTINGS.DARKGRAY)
             for i in range(0, len(text_map.files)):
@@ -31,13 +31,16 @@ class Menu:
                                                                15 + SETTINGS.WIDTH // 48), (9 * SETTINGS.WIDTH // 96,
                                                                15 + SETTINGS.WIDTH // 320), (9 * SETTINGS.WIDTH // 96,
                                                                15 + SETTINGS.WIDTH // 24 - SETTINGS.WIDTH // 320)))
+            pygame.draw.rect(self.sc, SETTINGS.DARKGREEN, (7 * SETTINGS.WIDTH // 96,
+                                                              15 + 2 * SETTINGS.WIDTH // 96 - SETTINGS.WIDTH // 108,
+                                                              2 * SETTINGS.WIDTH // 96, SETTINGS.WIDTH // 54))
             if mus:
-                pygame.draw.arc(self.sc, SETTINGS.DARKGREEN, (10 * SETTINGS.WIDTH // 96, 20,
+                pygame.draw.arc(self.sc, SETTINGS.DARKGREEN, (10 * SETTINGS.WIDTH // 96 - 1 * SETTINGS.WIDTH // 180, 20,
                                                               SETTINGS.WIDTH // 96, SETTINGS.WIDTH // 24 - 10),
                                 6 * pi / 5, 4 * pi / 5)
             pygame.draw.rect(self.sc, SETTINGS.BROWN, (4 * SETTINGS.WIDTH // 40 + SETTINGS.WIDTH // 24, 15,
                                                        SETTINGS.WIDTH // 24, SETTINGS.WIDTH // 24))
-            if not map_hide:
+            if map_hide <= 1:
                 pygame.draw.lines(self.sc, SETTINGS.LIGHTGRAY, False, ((4 * SETTINGS.WIDTH // 40
                                                                        + SETTINGS.WIDTH // 24 + 10,
                                                                        SETTINGS.WIDTH // 24 + 5),
@@ -49,6 +52,7 @@ class Menu:
                                                                         - 10, 25), (4 * SETTINGS.WIDTH // 40
                                                                        + SETTINGS.WIDTH // 24 + SETTINGS.WIDTH // 24
                                                                        - 10, 20)), 3)
+            if map_hide == 0:
                 pygame.draw.line(self.sc, SETTINGS.RED, (4 * SETTINGS.WIDTH // 40
                                                          + SETTINGS.WIDTH // 24 + SETTINGS.WIDTH // 24
                                                          - 12, 17), (4 * SETTINGS.WIDTH // 40

@@ -160,6 +160,8 @@ class Player():
 
         collide = self.is_collide()
         rx, ry = self.real_x, self.real_y
+        if keys[pygame.K_e]:
+            self.speed *= 2
         if collide:
             if keys[pygame.K_w]:
                 self.real_x += collide['W'][0] * (self.speed * direction['W'][0])
@@ -195,6 +197,7 @@ class Player():
 
         if (round(self.real_x / SETTINGS.tile_size - 0.5), round(self.real_y / SETTINGS.tile_size - 0.5)) in self.flat_map:
             self.real_x, self.real_y = rx, ry
+        self.speed = SETTINGS.player_speed
 
         '''Changing player angle'''
         # if keys[pygame.K_LEFT]:
@@ -214,15 +217,16 @@ class Player():
         if pos_0 < 200 or pos_0 > SETTINGS.shift_coeff:
             pygame.mouse.set_pos(SETTINGS.h_WIDTH, SETTINGS.h_HEIGHT)
 
-        '''For test npc'''
-        if keys[pygame.K_z]:
-            self.npc.angle = 1
-        if keys[pygame.K_x]:
-            self.npc.angle = -1
-        if keys[pygame.K_c]:
-            self.npc.elevation += 2
-        if keys[pygame.K_v]:
-            self.npc.elevation -= 2
+        if False:
+            '''For test npc'''
+            if keys[pygame.K_z]:
+                self.npc.angle = 1
+            if keys[pygame.K_x]:
+                self.npc.angle = -1
+            if keys[pygame.K_c]:
+                self.npc.elevation += 2
+            if keys[pygame.K_v]:
+                self.npc.elevation -= 2
 
         self.angle %= SETTINGS.double_pi
         self.player_coords = (self.real_x, self.real_y)

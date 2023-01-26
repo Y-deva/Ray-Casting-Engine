@@ -184,6 +184,7 @@ class RayCast:
             # self.walls[n_ray] = (self.dist, projected_height, texture_offset, texture)
             self.walls[n_ray] = (self.dist, projected_height, texture_offset, texture)
 
+
             '''Casting floor'''
             sin_a = math.sin(self.angle_ray)  # <---------
             cos_a = math.cos(self.angle_ray)  # <---------

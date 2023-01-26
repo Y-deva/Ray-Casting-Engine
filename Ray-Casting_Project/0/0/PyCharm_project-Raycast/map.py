@@ -12,7 +12,7 @@ class Map():
 		map = {}
 		for y,row in enumerate(self.text_map):
 			for x,char in enumerate(row):
-				if char != ' ':
+				if char != ' ' and char != 'P' and char != 'N':
 					set_of_coords_tiles.add((x * SETTINGS.scale_map, y * SETTINGS.scale_map,
 											SETTINGS.scale_map, SETTINGS.scale_map))
 					map[(x, y)] = char
