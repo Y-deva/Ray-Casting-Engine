@@ -2,6 +2,7 @@
 It is a flexible open source game engine. 
 The project was created for Yandex Lyceum. 
 
+To run the program, simply run main.py
 
 P.S. In the folder "Ray-Casting-Engine-main\Ray-Casting_Project\0\0\PyCharm_project-Raycast\img\textures\128px" you need to extract all the files and delete the zip archives that you have unpacked. 
 
